@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color:lightpink;
+        }
+        img {
+            width: 60px;
+            height: 60px;
+        }
+        div{
+            text-align: center;
+        }
+        h1{
+            text-align: center;
+            color: crimson;
+            font-family: cursive;
+        }
+    
+    </style>
+    
+    
+</head>
+
+<body>
+
+    <h1>&#129327; MEMORY GAME &#129327;</h1>
+    <div>
+        <!-- first row -->
+        <div id="r1">
+        <img id="1" src="assists/Moon.gif" onclick="check(this)"/>
+        <img id="2" src="assists/Moon.gif" onclick="check(this)"/>
+        <img id="3" src="assists/Moon.gif" onclick="check(this)"/>
+        <img id="4" src="assists/Moon.gif" onclick="check(this)"/>
+        </div>
+
+        
+        <!-- second row -->
+        <div id="r2">
+        <img id="5" src="assists/Moon.gif" onclick="check(this)"/>
+        <img id="6" src="assists/Moon.gif" onclick="check(this)"/>
+        <img id="7" src="assists/Moon.gif" onclick="check(this)"/>
+        <img id="8" src="assists/Moon.gif" onclick="check(this)"/>
+        </div>
+        
+        <!-- third row -->
+        <div id="i3">
+        <img id="9" src="assists/Moon.gif" onclick="check(this)"/>
+        <img id="10" src="assists/Moon.gif" onclick="check(this)"/>
+        <img id="11" src="assists/Moon.gif" onclick="check(this)"/>
+        <img id="12" src="assists/Moon.gif" onclick="check(this)"/>
+        </div>
+    </div>
+    <script src="/game.js"></script>
+    <script>
+        
+
+
+        
+        function pop(str){
+            var ch=window.open("","width=150","height=150");
+            var congrats=ch.document.createElement("img");
+            var bd=ch.document.createElement("body");
+            var di=ch.document.createElement("div");
+            di.style.textAlign="center";
+            congrats.src=document.location.origin+str;
+            congrats.setAttribute("width","350px");
+            congrats.setAttribute("height","350px");
+
+            di.appendChild(congrats);
+            bd.style.backgroundColor="lightpink";
+            ch.window.document.body.appendChild(di);
+            ch.focus();
+
+        }
+       
+        function check(obj){
+           
+            if(obj.src==original.src){//image clicked is hidden
+                if(flipped){//second flip
+                   
+                    document.getElementById(obj.id).src=imgs[parseInt(obj.id)-1]; 
+                    if(imgs[parseInt(obj.id)-1]==last_img_clicked){//matching
+                       
+                        flipped=0;
+                        last_img_clicked="assists/Moon.gif";
+                        last_img_clicked_id=0;
+                        correct_ans++;
+                        if(correct_ans==img_no){//won
+                            pop("/assists/congratulations-congrats.gif");
+                            }
+
+                    }
+                    else{ //not matching
+                        mistakes++;
+                        flipped=0;
+                        setTimeout(function(){  
+                            last_img_clicked="assists/Moon.gif";
+                            document.getElementById(last_img_clicked_id).src="assists/Moon.gif";
+                            obj.src= "assists/Moon.gif";
+                            if(mistakes>5) { reset();
+                                             pop("/assists/bart-simpson-the-simpsons.gif");
+                                            }},500);
+                        
+                    }
+                }
+                else{ //first flip
+                    obj.src=imgs[parseInt(obj.id)-1] //this works just fine
+                    last_img_clicked=imgs[parseInt(obj.id)-1];
+                    last_img_clicked_id=obj.id;
+                    flipped=1;
+
+                }
+            }
+
+        }
+        function reset(){
+            shuffle_arr(imgs);
+            var newimgs=document.getElementsByTagName("img");
+            for(var i=0;i< newimgs.length;i++ ){
+                    newimgs[i].src="assists/Moon.gif";
+                    
+            }
+            mistakes=0;
+
+        }
+        
+    </script>
+
+    
+</body>
+</html>
